@@ -99,10 +99,16 @@ def batch_soft_size(a: Tensor) -> Tensor:
 
 # Assert utils
 def uniq(a: Tensor) -> Set:
+    """
+    提取出元素的不重复的值
+    """
     return set(torch.unique(a.cpu()).numpy())
 
 
 def sset(a: Tensor, sub: Iterable) -> bool:
+    """
+    判断a是否为sub的子集
+    """
     return uniq(a).issubset(sub)
 
 
@@ -111,12 +117,18 @@ def eq(a: Tensor, b) -> bool:
 
 
 def simplex(t: Tensor, axis=1) -> bool:
+    """
+    判断t所有像素在channel轴上的和是否为1
+    """
     _sum = cast(Tensor, t.sum(axis).type(torch.float32))
     _ones = torch.ones_like(_sum, dtype=torch.float32)
     return torch.allclose(_sum, _ones)
 
 
 def one_hot(t: Tensor, axis=1) -> bool:
+    """
+    判断t是否为onehot之后的tensor
+    """
     return simplex(t, axis) and sset(t, [0, 1])
 
 
