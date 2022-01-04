@@ -80,7 +80,7 @@ class SurfaceLoss():
         print(f"Initialized {self.__class__.__name__} with {kwargs}")
 
     def __call__(self, probs: Tensor, dist_maps: Tensor) -> Tensor:
-        assert simplex(probs)
+        assert simplex(probs) 
         assert not one_hot(dist_maps)
 
         pc = probs[:, self.idc, ...].type(torch.float32)
